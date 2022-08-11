@@ -1,15 +1,17 @@
 import React from 'react';
 import { Container, Grid, Typography } from '@mui/material';
 import { Button } from './Components/Library/Index';
+import { Registration } from './Components/Customer/Index';
 
 function App() {
     return (
         <Container maxWidth="xl" disableGutters>
             <Grid container spacing={3} justifyContent="center">
                 <Grid item>
-                    <Button variant="contained" color="primary">
-                        Base Setup
-                    </Button>
+                    <Typography variant="h1">Done</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Registration />
                 </Grid>
             </Grid>
         </Container>

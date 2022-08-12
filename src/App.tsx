@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Grid, Typography } from '@mui/material';
-import { Button } from './Components/Library/Index';
 import { Registration } from './Components/Customer/Index';
 
 function App() {

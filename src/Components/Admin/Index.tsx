@@ -1,1 +1,1 @@
-export default undefined;
+export {Dashboard} from './Dashboard'

@@ -5,6 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 import theme from './Theme';
+import { Amplify } from 'aws-amplify';
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

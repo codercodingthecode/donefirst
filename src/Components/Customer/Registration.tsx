@@ -2,6 +2,20 @@ import { Form, useFormik } from 'formik';
 import { FC } from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
 import { Button } from '../Library/Index';
+import * as Yup from 'yup';
+import { phoneValidation } from '../../Utils/String';
+
+const formValidationSchema = Yup.object({
+    name: Yup.string().required('Name is required'),
+    // phone: Yup.string().matches(phoneValidation, 'Enter a valid phone number').required('Phone is required'),
+    phone: Yup.string()
+        .test('phone-test', 'Enter a valid phone number', (value) => phoneValidation.test(value || ''))
+        .required('Phone is required'),
+    email: Yup.string().email('Enter a valid Email').required('Email is required'),
+    address: Yup.string().required('Address is required'),
+    photoDL: Yup.string().required('Photo DL is required'),
+    appointmentDate: Yup.string().required('Appointment Date is required'),
+});
 
 export const Registration: FC = () => {
     const formik = useFormik({
@@ -13,6 +27,7 @@ export const Registration: FC = () => {
             photoDL: '',
             appointmentDate: '',
         },
+        validationSchema: formValidationSchema,
         onSubmit: (values, { setSubmitting }) => {
             setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
@@ -48,6 +63,7 @@ export const Registration: FC = () => {
                                 id="phone"
                                 name="phone"
                                 label="Phone"
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                                 value={formik.values.phone}
                                 onChange={formik.handleChange}
                                 error={formik.touched.phone && Boolean(formik.errors.phone)}
@@ -108,7 +124,7 @@ export const Registration: FC = () => {
                                 variant="contained"
                                 color="primary"
                                 isLoading={formik.isSubmitting}
-                                disabled={formik.isSubmitting}
+                                disabled={formik.isSubmitting || !formik.isValid || !formik.dirty}
                             >
                                 Submit
                             </Button>

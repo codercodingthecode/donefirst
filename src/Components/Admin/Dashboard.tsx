@@ -35,3 +35,17 @@ export const Dashboard: React.FC = () => {
         </Container>
     )
 }
+
+const List: React.FC = () => {
+    console.log('render List');
+    return (
+            <Grid container justifyContent="center">
+                <Grid item xs={12}>
+                    <Typography variant="h3">
+                        List
+                    </Typography>
+                </Grid>
+
+            </Grid>
+    )
+}

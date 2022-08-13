@@ -1,7 +1,7 @@
 import { Form, useFormik } from 'formik';
 import { FC } from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
-import { Button } from '../Library/Index';
+import { Button } from '../Library';
 import * as Yup from 'yup';
 import { phoneValidation } from '../../Utils/String';
 

@@ -10,6 +10,7 @@ import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DatePicker, DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DateTime } from 'luxon';
 import { Register } from '../../Models/Register';
+import { Storage } from 'aws-amplify';
 
 const formValidationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -51,6 +52,17 @@ export const Registration: FC = () => {
                 });
         },
     });
+
+    const uploadData = async (e: any) => {
+        const file = e.target.files[0];
+        try {
+            await Storage.put(formik.values.id, file, {
+                contentType: 'image/png, image/jpeg',
+            });
+        } catch (error) {
+            console.log('Error uploading file: ', error);
+        }
+    };
 
     return (
         <LocalizationProvider dateAdapter={AdapterLuxon}>
@@ -142,6 +154,9 @@ export const Registration: FC = () => {
                                     error={formik.touched.photoDl && Boolean(formik.errors.photoDl)}
                                     helperText={formik.touched.photoDl && formik.errors.photoDl}
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <input type="file" onChange={uploadData} />;
                             </Grid>
                             <Grid item xs={12}>
                                 <DateTimePicker<DateTime>

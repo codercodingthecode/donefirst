@@ -7,6 +7,7 @@ import {Registration} from "../Customer/index";
 
 export const Router: React.FC = () => {
 
+    console.log('render Router');
     return (
         <Routes>
                 <Route path="/" element={<PageSelection />} />

@@ -6,10 +6,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 import theme from './Theme';
 import { Amplify } from 'aws-amplify';
-import awsExports from './aws-exports';
 import { BrowserRouter } from "react-router-dom";
+import {awsConfig} from "./Configuration/AmplifyConfig";
 
-Amplify.configure(awsExports);
+Amplify.configure(awsConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

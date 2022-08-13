@@ -1,6 +1,7 @@
-import { Amplify } from 'aws-amplify';
+import awsExports from "../aws-exports";
 
-Amplify.configure({
+export const awsConfig = {
+    ...awsExports,
     API: {
         endpoints: [
             {
@@ -9,4 +10,4 @@ Amplify.configure({
             },
         ]
     }
-});
+};

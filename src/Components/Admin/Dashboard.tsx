@@ -1,18 +1,27 @@
 import {Container, Grid, Typography} from "@mui/material";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {API} from "aws-amplify";
+import {Register} from "../../Models/Register";
 
 
 export const Dashboard: React.FC = () => {
+    const [data, setData] = useState<Register[]>();
+    const [loading, setLoading] = useState(false);
+
+    const getData = useCallback(  () => {
+        setLoading(true);
+        API.get("done-registration-service", "/list", {}).then(data => {
+            setData(data);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }, []);
 
     useEffect(() => {
-        API.get("done-registration-service", "/list", {}).then(data => {
-            console.log(data);
-        }).catch(err => {
-            console.log(err);
-        })
-    } , [])
+        return getData();
+    } , [getData])
 
+    console.log('render Dashboard');
     return (
         <Container disableGutters maxWidth="xl">
             <Grid container justifyContent="center">

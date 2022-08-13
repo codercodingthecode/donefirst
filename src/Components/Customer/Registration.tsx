@@ -41,6 +41,7 @@ export const Registration: FC = () => {
         onSubmit: (values, { setSubmitting, resetForm }) => {
             API.post('done-registration-service', '', {
                 body: values,
+                headers: {},
             })
                 .then(() => {
                     setSubmitting(false);

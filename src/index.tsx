@@ -15,18 +15,17 @@ const firebaseConfig = { ...firebaseBucketConfig };
 
 Amplify.configure(awsConfig);
 export const app = initializeApp(firebaseConfig);
-// export const storage = getStorage(app);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    // <React.StrictMode>
-    <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </ThemeProvider>
-    // </React.StrictMode>
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </ThemeProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

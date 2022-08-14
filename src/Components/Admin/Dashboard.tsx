@@ -223,7 +223,7 @@ export const Dashboard: React.FC = () => {
                 </Grid>
             </Grid>
         );
-    }, [selectedRegister]);
+    }, [selectedRegister, data]);
 
     return (
         <Container disableGutters maxWidth="lg">

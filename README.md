@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Frontend Coding Challenge for Done.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+##  Description
 
-In the project directory, you can run:
+This project focus only on the Web and has no need of any backend project to be started.
+It connects to an aws microservice backend.
 
-### `yarn start`
+This frontend project provides two user interfaces UI.
+- UI 1: allows the customer to enter a registration Form and submit it.
+- UI 2: allows the Administrator to view a list of all users and select any user on the list
+to see their registration data by clicking anywhere on the row.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+###  Steps to run the frontend project
 
-### `yarn test`
+This project can be ran in two ways:
+- UI 1: On the web hosted on aws and is accessible from the following url:
+  https://main.d38rb60bru34gq.amplifyapp.com/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+- Locally by running the command:
+    ```
+  yarn && yarn start 
+    ```
+    Do not forget to run the command yarn install before running the command yarn start.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  Runs the app in the development mode.
 
-### `yarn eject`
+  Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Technologies used:
+- React
+- Typescript
+- Material UI
+- React-Router
+- Formik
+- Luxon
+- Firebase
+- AWS Amplify

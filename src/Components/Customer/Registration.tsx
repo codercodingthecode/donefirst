@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
 import { Button } from '../Library';
 import * as Yup from 'yup';
@@ -10,7 +10,9 @@ import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DatePicker, DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DateTime } from 'luxon';
 import { Register } from '../../Models/Register';
-import { Storage } from 'aws-amplify';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import DoneIcon from '@mui/icons-material/Done';
 
 const formValidationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -25,6 +27,9 @@ const formValidationSchema = Yup.object({
 });
 
 export const Registration: FC = () => {
+    const [fileIsUploading, setFileIsUploading] = useState(false);
+    const [filedUploaded, setFileUploaded] = useState(false);
+
     const formik = useFormik<Register>({
         initialValues: {
             id: uuid(),
@@ -41,36 +46,41 @@ export const Registration: FC = () => {
         onSubmit: (values, { setSubmitting, resetForm }) => {
             API.post('done-registration-service', '', {
                 body: values,
-                headers: {},
             })
                 .then(() => {
                     setSubmitting(false);
                     resetForm();
                 })
                 .catch((err) => {
-                    console.log(err);
                     setSubmitting(false);
+                    setFileUploaded(false);
+                })
+                .finally(() => {
+                    setFileUploaded(false);
                 });
         },
     });
 
-    const uploadData = async (e: any) => {
-        const file = e.target.files[0];
-        try {
-            await Storage.put(formik.values.id, file, {
-                contentType: 'image/png, image/jpeg',
-            });
-        } catch (error) {
-            console.log('Error uploading file: ', error);
+    const uploadData = async (file: File | null) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, formik.values.id);
+        setFileUploaded(false);
+
+        if (file) {
+            setFileIsUploading(true);
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            await formik.setFieldValue('photoDl', url);
+            setFileIsUploading(false);
+            setFileUploaded(true);
         }
     };
 
     return (
         <LocalizationProvider dateAdapter={AdapterLuxon}>
-            <>{JSON.stringify(formik.values)}</>
             <Grid container spacing={3} justifyContent="center">
                 <Grid item xs={12}>
-                    <Typography align="center" variant="h3">
+                    <Typography align="center" variant="h3" paddingBottom={4}>
                         Registration
                     </Typography>
                 </Grid>
@@ -89,7 +99,7 @@ export const Registration: FC = () => {
                                     helperText={formik.touched.name && formik.errors.name}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <DatePicker
                                     disableFuture
                                     value={formik.values.dob ? DateTime.fromSeconds(formik.values.dob) : null}
@@ -107,7 +117,7 @@ export const Registration: FC = () => {
                                     )}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <TextField
                                     fullWidth
                                     id="phone"
@@ -144,22 +154,7 @@ export const Registration: FC = () => {
                                     helperText={formik.touched.address && formik.errors.address}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    id="photoDl"
-                                    name="photoDl"
-                                    label="Photo DL"
-                                    value={formik.values.photoDl}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.photoDl && Boolean(formik.errors.photoDl)}
-                                    helperText={formik.touched.photoDl && formik.errors.photoDl}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <input type="file" onChange={uploadData} />;
-                            </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <DateTimePicker<DateTime>
                                     disablePast
                                     inputFormat="LL/dd hh:mm a"
@@ -184,6 +179,26 @@ export const Registration: FC = () => {
                                     )}
                                 />
                             </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="outlined"
+                                    color={filedUploaded ? 'success' : 'primary'}
+                                    startIcon={filedUploaded ? <DoneIcon /> : <UploadFileIcon />}
+                                    component="label"
+                                    isLoading={fileIsUploading}
+                                    disabled={fileIsUploading}
+                                    fullWidth
+                                    sx={{ height: '95%' }}
+                                >
+                                    {filedUploaded ? 'Photo DL Uploaded' : 'Upload Photo DL'}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        hidden
+                                        onChange={(e) => uploadData(e.target?.files ? e.target.files[0] : null)}
+                                    />
+                                </Button>
+                            </Grid>
                             <Grid item container xs={12} justifyContent="right">
                                 <Button
                                     type="submit"
@@ -202,47 +217,3 @@ export const Registration: FC = () => {
         </LocalizationProvider>
     );
 };
-
-// const DatePicker: React.FC = () => {
-//     const [selectedDate, setSelectedDate] = useState();
-//     const handleDateChange = (date: Date) => {
-//         setSelectedDate(date);
-//     }
-//     return (
-//         <LocalizationProvider dateAdapter={AdapterLuxon}>
-//
-//         </LocalizationProvider>
-//     );
-//
-// }
-
-// return (
-//     <Formik
-//         initialValues={{
-//             name: '',
-//             phone: '',
-//             email: '',
-//             address: '',
-//             photoDL: '',
-//             appointmentDate: '',
-//         }}
-//         onSubmit={(values, { setSubmitting }) => {
-//             setTimeout(() => {
-//                 alert(JSON.stringify(values, null, 2));
-//                 setSubmitting(false);
-//             }, 3000);
-//         }}
-//     >
-//         {({ isSubmitting }) => (
-//             <Form>
-//                 <Field type="text" name="name" placeholder="Name" />
-//                 <Field type="text" name="phone" placeholder="Phone" />
-//                 <Field type="text" name="email" placeholder="Email" />
-//                 <Field type="text" name="address" placeholder="Address" />
-//                 <Field type="text" name="photoDL" placeholder="Photo DL" />
-//                 <Field type="text" name="appointmentDate" placeholder="Appointment Date" />
-//             </Form>
-//         )}
-//     </Formik>
-// );
-// };

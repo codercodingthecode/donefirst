@@ -2,7 +2,7 @@ import { CircularProgress, Button as MuiButton, ButtonProps as MuiButtonProps } 
 import { styled } from '@mui/material/styles';
 import React from 'react';
 
-interface ButtonProps extends MuiButtonProps {
+interface ButtonProps {
     isLoading?: boolean;
 }
 
@@ -15,7 +15,11 @@ const Loader = styled(CircularProgress)(() => ({
     color: 'red',
 }));
 
-export const Button: React.FC<ButtonProps> = ({ children, isLoading, ...props }) => {
+export const Button = <C extends React.ElementType>({
+    children,
+    isLoading,
+    ...props
+}: MuiButtonProps<C, { component?: C } & ButtonProps>) => {
     return (
         <MuiButton {...props}>
             {children}

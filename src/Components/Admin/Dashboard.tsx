@@ -1,13 +1,26 @@
-import { Container, Grid, Typography } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Avatar, Container, Grid, Typography } from '@mui/material';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { API } from 'aws-amplify';
 import { Register } from '../../Models/Register';
-import { DataGrid, GridColDef, GridColumns } from '@mui/x-data-grid';
+import { DataGrid, GridColumns } from '@mui/x-data-grid';
 import { DateTime } from 'luxon';
+import { Dialog } from '../Library/Dialog';
+import { Button } from '../Library';
+import AccountCircleIcon from '@mui/icons-material/AccountCircleOutlined';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import MailIcon from '@mui/icons-material/MailOutlined';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import HomeIcon from '@mui/icons-material/HomeOutlined';
+import BadgeIcon from '@mui/icons-material/BadgeOutlined';
+
+const COLOR_GRAY = '#b1b4d0';
 
 export const Dashboard: React.FC = () => {
     const [data, setData] = useState<Register[]>();
     const [loading, setLoading] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedRegister, setSelectedRegister] = useState<Register['id']>('');
 
     const getData = useCallback(() => {
         setLoading(true);
@@ -49,10 +62,168 @@ export const Dashboard: React.FC = () => {
                     return DateTime.fromSeconds(params.row.appointment).toLocaleString(DateTime.DATETIME_SHORT);
                 },
             },
-            { field: 'photoDl', headerName: 'DL Photo', width: 100, flex: 1, sortable: false },
+            {
+                field: 'photoDl',
+                headerName: 'DL Photo',
+                width: 100,
+                flex: 1,
+                sortable: false,
+                renderCell: (params) => {
+                    console.log('params', params.row.photoDl);
+                    if (params.row.photoDl) {
+                        return <img src={params.row.photoDl} alt={params.row.name} style={{ width: '100%' }} />;
+                    } else {
+                        return null;
+                    }
+                },
+            },
         ],
         []
     );
+
+    const handleActions = useCallback(() => {
+        return (
+            <Grid item container justifyContent="flex-end">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        setDialogOpen(false);
+                    }}
+                >
+                    Close
+                </Button>
+            </Grid>
+        );
+    }, []);
+
+    const customerRegistrationContent = useMemo(() => {
+        const customer = data?.find((c) => c.id === selectedRegister);
+        return (
+            <Grid container spacing={4}>
+                <Grid container item xs={12}>
+                    <Grid item xs={1.3}>
+                        <AccountCircleIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs={'auto'} direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Name
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>{customer?.name}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={6}>
+                    <Grid item xs={2.7}>
+                        <AlignHorizontalLeftIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Data of Birth
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>
+                                {customer?.dob
+                                    ? DateTime.fromSeconds(customer.dob).toLocaleString(DateTime.DATE_FULL)
+                                    : ''}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={6}>
+                    <Grid item xs={2.7}>
+                        <PhoneAndroidIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Phone
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>{customer?.phone}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={6}>
+                    <Grid item xs={2.7}>
+                        <MailIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Email
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>{customer?.email}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={6}>
+                    <Grid item xs={2.7}>
+                        <PendingActionsIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Appointment
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>{customer?.appointment}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={12}>
+                    <Grid item xs={1.3}>
+                        <HomeIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Address
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'body1'}>{customer?.address}</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid container item xs={12}>
+                    <Grid item>
+                        <BadgeIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    </Grid>
+                    <Grid container item xs direction={'column'}>
+                        <Grid item>
+                            <Typography variant="body1" color={COLOR_GRAY}>
+                                Drive License
+                            </Typography>
+                        </Grid>
+                        <Grid container item>
+                            <Avatar
+                                alt={customer?.name}
+                                src={customer?.photoDl}
+                                variant={'square'}
+                                sx={{ height: 140, width: 180 }}
+                            />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        );
+    }, [selectedRegister]);
 
     return (
         <Container disableGutters maxWidth="lg">
@@ -71,9 +242,21 @@ export const Dashboard: React.FC = () => {
                         getRowId={(row) => row.id}
                         disableColumnFilter
                         autoHeight
+                        onRowClick={(e) => {
+                            setDialogOpen(true);
+                            setSelectedRegister(e.row.id);
+                        }}
+                        disableColumnSelector
+                        disableSelectionOnClick
                     />
                 </Grid>
             </Grid>
+            <Dialog
+                open={dialogOpen}
+                renderContent={() => customerRegistrationContent}
+                onClose={() => setDialogOpen(false)}
+                renderActions={handleActions}
+            />
         </Container>
     );
 };

@@ -41,3 +41,6 @@ This project can be ran in two ways:
 - Luxon
 - Firebase
 - AWS Amplify
+- Github
+
+#### The Application is hosted over AWS and is auto deployed from Github automatically.

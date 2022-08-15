@@ -180,7 +180,11 @@ export const Dashboard: React.FC = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant={'body1'}>{customer?.appointment}</Typography>
+                            <Typography variant={'body1'}>
+                                {customer?.appointment
+                                    ? DateTime.fromSeconds(customer.appointment).toLocaleString(DateTime.DATETIME_MED)
+                                    : ''}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -43,4 +43,14 @@ This project can be ran in two ways:
 - AWS Amplify
 - Github
 
+### Screenshots
+- Registration Form
+![img.png](img.png)
+
+- Admin View Users
+![img_1.png](img_1.png)
+
+- Admin View User Details
+![img_2.png](img_2.png)
+- 
 #### The Application is hosted over AWS and is auto deployed from Github automatically.

@@ -46,11 +46,13 @@ This project can be ran in two ways:
 ### Screenshots
 - Registration Form
 ![img.png](img.png)
+![img_4.png](img_4.png)
 
 - Admin View Users
 ![img_1.png](img_1.png)
 
 - Admin View User Details
 ![img_2.png](img_2.png)
-- 
+![img_3.png](img_3.png)
+
 #### The Application is hosted over AWS and is auto deployed from Github automatically.

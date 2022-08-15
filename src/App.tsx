@@ -8,7 +8,7 @@ function App() {
     const navigate = useNavigate();
 
     return (
-        <Container maxWidth="xl" disableGutters>
+        <Container maxWidth="xl">
             <Grid container spacing={3} justifyContent="center">
                 <Grid item>
                     <Typography variant="h1" component={Link} onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>

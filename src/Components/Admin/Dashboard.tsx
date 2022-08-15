@@ -102,10 +102,10 @@ export const Dashboard: React.FC = () => {
         return (
             <Grid container spacing={4}>
                 <Grid container item xs={12}>
-                    <Grid item xs={1.3}>
-                        <AccountCircleIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    <Grid item>
+                        <AccountCircleIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
-                    <Grid container item xs={'auto'} direction={'column'}>
+                    <Grid container item xs direction={'column'}>
                         <Grid item>
                             <Typography variant="body1" color={COLOR_GRAY}>
                                 Name
@@ -117,9 +117,9 @@ export const Dashboard: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container item xs={6}>
-                    <Grid item xs={2.7}>
-                        <AlignHorizontalLeftIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                <Grid container item xs={12} md={6}>
+                    <Grid item>
+                        <AlignHorizontalLeftIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>
@@ -137,9 +137,9 @@ export const Dashboard: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container item xs={6}>
-                    <Grid item xs={2.7}>
-                        <PhoneAndroidIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                <Grid container item xs={12} md={6}>
+                    <Grid item>
+                        <PhoneAndroidIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>
@@ -153,9 +153,9 @@ export const Dashboard: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container item xs={6}>
-                    <Grid item xs={2.7}>
-                        <MailIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                <Grid container item xs={12} md={6}>
+                    <Grid item>
+                        <MailIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>
@@ -169,9 +169,9 @@ export const Dashboard: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container item xs={6}>
-                    <Grid item xs={2.7}>
-                        <PendingActionsIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                <Grid container item xs={12} md={6}>
+                    <Grid item>
+                        <PendingActionsIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>
@@ -190,8 +190,8 @@ export const Dashboard: React.FC = () => {
                 </Grid>
 
                 <Grid container item xs={12}>
-                    <Grid item xs={1.3}>
-                        <HomeIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                    <Grid item>
+                        <HomeIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>
@@ -207,7 +207,7 @@ export const Dashboard: React.FC = () => {
 
                 <Grid container item xs={12}>
                     <Grid item>
-                        <BadgeIcon style={{ fontSize: '50px', color: COLOR_GRAY }} />
+                        <BadgeIcon style={{ fontSize: '50px', color: COLOR_GRAY, marginRight: 8 }} />
                     </Grid>
                     <Grid container item xs direction={'column'}>
                         <Grid item>

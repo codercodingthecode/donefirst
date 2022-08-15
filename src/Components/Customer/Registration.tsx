@@ -84,7 +84,7 @@ export const Registration: FC = () => {
                         Registration
                     </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid container spacing={3} justifyContent="center">
                             <Grid item xs={12}>
